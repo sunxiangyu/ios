@@ -9,6 +9,11 @@
 #import "LoginViewController.h"
 #import "MBProgressHUD+NJ.h"
 
+#define kAccount @"account"
+#define kPwd @"pwd"
+#define kRemPwd @"remPwd"
+#define kAutoLogin @"autoLogin"
+
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *accoutTextField;
 
@@ -40,6 +45,24 @@
     [center addObserver:self selector:@selector(textChange) name:UITextFieldTextDidChangeNotification object:self.accoutTextField];
     [center addObserver:self selector:@selector(textChange) name:UITextFieldTextDidChangeNotification object:self.pwdTextField];
     
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    self.accoutTextField.text = [defaults objectForKey:kAccount];
+    
+    [self.remPwdSwitch setOn:[defaults boolForKey:kRemPwd] animated:YES];
+    
+    if (self.remPwdSwitch.isOn) {
+        self.pwdTextField.text = [defaults objectForKey:kPwd];
+    }
+    
+    [self.autoLoginSwitch setOn:[defaults boolForKey:kAutoLogin] animated:YES];
+    
+    self.LoginBtn.enabled = (self.accoutTextField.text.length > 0 && self.pwdTextField.text.length > 0);
+    
+//    if (self.autoLoginSwitch.isOn) {
+//        [self loginBtnOnClick:nil];
+//    }
     
 }
 
@@ -84,6 +107,13 @@
         [MBProgressHUD hideHUD];
         
         [self performSegueWithIdentifier:@"login2contact" sender:nil];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:self.accoutTextField.text forKey:kAccount];
+        [defaults setObject:self.pwdTextField.text forKey:kPwd];
+        [defaults setBool:self.remPwdSwitch.isOn forKey:kRemPwd];
+        [defaults setBool:self.autoLoginSwitch.isOn forKey:kAutoLogin];
+        [defaults synchronize];
     });
 }
 

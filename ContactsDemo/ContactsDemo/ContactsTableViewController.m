@@ -12,6 +12,8 @@
 #import "Contact.h"
 #import "EditViewController.h"
 
+#define kContactPath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"contacts.arc"]
+
 @interface ContactsTableViewController ()<UIActionSheetDelegate, AddViewControllerDelegate, EditViewControllerDelegate>
 - (IBAction)loginOut:(id)sender;
 
@@ -30,7 +32,11 @@
 -(NSMutableArray *)contacts
 {
     if (_contacts == nil) {
-        _contacts = [NSMutableArray array];
+        _contacts = [NSKeyedUnarchiver unarchiveObjectWithFile:kContactPath];
+        
+        if (_contacts == nil) {
+            _contacts = [NSMutableArray array];
+        }
     }
     return _contacts;
 }
@@ -81,6 +87,8 @@
 {
     [self.contacts addObject:contact];
     
+    [NSKeyedArchiver archiveRootObject:self.contacts toFile:kContactPath];;
+    
     [self.tableView reloadData];
 }
 
@@ -88,6 +96,8 @@
 
 -(void)editViewControllerDidClickSaveBtn:(EditViewController *)editViewController contact:(Contact *)contact
 {
+    [NSKeyedArchiver archiveRootObject:self.contacts toFile:kContactPath];
+    
     [self.tableView reloadData];
 }
 
@@ -106,4 +116,17 @@
     return cell;
     
 }
+
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.contacts removeObjectAtIndex:indexPath.row];
+        
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+        
+        [NSKeyedArchiver archiveRootObject:self.contacts toFile:kContactPath];
+    }
+}
+
 @end
