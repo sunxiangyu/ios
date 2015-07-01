@@ -10,4 +10,11 @@
 
 @interface Apps : NSObject
 
+@property(nonatomic, copy) NSString *name;
+@property(nonatomic, copy) NSString *icon;
+@property(nonatomic, copy) NSString *download;
+
++(instancetype)appsWithDict:(NSDictionary *)dict;
+-(instancetype)initWithDict:(NSDictionary *)dict;
+
 @end

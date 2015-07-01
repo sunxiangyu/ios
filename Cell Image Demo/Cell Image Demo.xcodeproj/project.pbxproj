@@ -10,11 +10,13 @@
 		46C4101B1B444EB400D9CA4E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C4101A1B444EB400D9CA4E /* main.m */; };
 		46C4101E1B444EB400D9CA4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C4101D1B444EB400D9CA4E /* AppDelegate.m */; };
 		46C410211B444EB400D9CA4E /* Cell_Image_Demo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 46C4101F1B444EB400D9CA4E /* Cell_Image_Demo.xcdatamodeld */; };
-		46C410241B444EB400D9CA4E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C410231B444EB400D9CA4E /* ViewController.m */; };
 		46C410271B444EB400D9CA4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46C410251B444EB400D9CA4E /* Main.storyboard */; };
 		46C410291B444EB400D9CA4E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46C410281B444EB400D9CA4E /* Images.xcassets */; };
 		46C4102C1B444EB400D9CA4E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46C4102A1B444EB400D9CA4E /* LaunchScreen.xib */; };
 		46C410381B444EB400D9CA4E /* Cell_Image_DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C410371B444EB400D9CA4E /* Cell_Image_DemoTests.m */; };
+		46C410431B444EC600D9CA4E /* Apps.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C410421B444EC600D9CA4E /* Apps.m */; };
+		46C410451B444EF800D9CA4E /* apps.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46C410441B444EF800D9CA4E /* apps.plist */; };
+		46C410481B44512600D9CA4E /* AppsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C410471B44512600D9CA4E /* AppsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,14 +36,17 @@
 		46C4101C1B444EB400D9CA4E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		46C4101D1B444EB400D9CA4E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		46C410201B444EB400D9CA4E /* Cell_Image_Demo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Cell_Image_Demo.xcdatamodel; sourceTree = "<group>"; };
-		46C410221B444EB400D9CA4E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		46C410231B444EB400D9CA4E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		46C410261B444EB400D9CA4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		46C410281B444EB400D9CA4E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		46C4102B1B444EB400D9CA4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		46C410311B444EB400D9CA4E /* Cell Image DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Cell Image DemoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		46C410361B444EB400D9CA4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		46C410371B444EB400D9CA4E /* Cell_Image_DemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Cell_Image_DemoTests.m; sourceTree = "<group>"; };
+		46C410411B444EC600D9CA4E /* Apps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apps.h; sourceTree = "<group>"; };
+		46C410421B444EC600D9CA4E /* Apps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Apps.m; sourceTree = "<group>"; };
+		46C410441B444EF800D9CA4E /* apps.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = apps.plist; sourceTree = "<group>"; };
+		46C410461B44512600D9CA4E /* AppsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppsViewController.h; sourceTree = "<group>"; };
+		46C410471B44512600D9CA4E /* AppsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,8 +90,10 @@
 			children = (
 				46C4101C1B444EB400D9CA4E /* AppDelegate.h */,
 				46C4101D1B444EB400D9CA4E /* AppDelegate.m */,
-				46C410221B444EB400D9CA4E /* ViewController.h */,
-				46C410231B444EB400D9CA4E /* ViewController.m */,
+				46C410411B444EC600D9CA4E /* Apps.h */,
+				46C410421B444EC600D9CA4E /* Apps.m */,
+				46C410461B44512600D9CA4E /* AppsViewController.h */,
+				46C410471B44512600D9CA4E /* AppsViewController.m */,
 				46C410251B444EB400D9CA4E /* Main.storyboard */,
 				46C410281B444EB400D9CA4E /* Images.xcassets */,
 				46C4102A1B444EB400D9CA4E /* LaunchScreen.xib */,
@@ -99,6 +106,7 @@
 		46C410181B444EB400D9CA4E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				46C410441B444EF800D9CA4E /* apps.plist */,
 				46C410191B444EB400D9CA4E /* Info.plist */,
 				46C4101A1B444EB400D9CA4E /* main.m */,
 			);
@@ -202,6 +210,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46C410451B444EF800D9CA4E /* apps.plist in Resources */,
 				46C410271B444EB400D9CA4E /* Main.storyboard in Resources */,
 				46C4102C1B444EB400D9CA4E /* LaunchScreen.xib in Resources */,
 				46C410291B444EB400D9CA4E /* Images.xcassets in Resources */,
@@ -222,9 +231,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46C410431B444EC600D9CA4E /* Apps.m in Sources */,
 				46C410211B444EB400D9CA4E /* Cell_Image_Demo.xcdatamodeld in Sources */,
+				46C410481B44512600D9CA4E /* AppsViewController.m in Sources */,
 				46C4101E1B444EB400D9CA4E /* AppDelegate.m in Sources */,
-				46C410241B444EB400D9CA4E /* ViewController.m in Sources */,
 				46C4101B1B444EB400D9CA4E /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

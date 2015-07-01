@@ -7,94 +7,136 @@
 //
 
 #import "AppsViewController.h"
+#import "Apps.h"
 
 @interface AppsViewController ()
+
+@property(nonatomic,strong) NSMutableArray *apps;
+
+@property(nonatomic, strong) NSMutableDictionary *operations;
+
+@property(nonatomic, strong) NSMutableDictionary *images;
+
+@property(nonatomic, strong) NSOperationQueue *queue;
 
 @end
 
 @implementation AppsViewController
 
+-(NSMutableArray *)apps
+{
+    if (_apps == nil) {
+        NSArray *array = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"apps.plist" ofType:nil]];
+        NSMutableArray *arrM = [NSMutableArray array];
+        for (NSDictionary *dict in array) {
+            [arrM addObject:[Apps appsWithDict:dict]];
+        }
+        _apps = arrM;
+    }
+    return _apps;
+}
+
+-(NSOperationQueue *)queue
+{
+    if (_queue == nil) {
+        _queue = [[NSOperationQueue alloc] init];
+    }
+    return _queue;
+}
+
+-(NSMutableDictionary *)images
+{
+    if (_images == nil) {
+        _images = [[NSMutableDictionary alloc] init];
+    }
+    return _images;
+}
+
+-(NSMutableDictionary *)operations
+{
+    if (_operations == nil) {
+        _operations = [[NSMutableDictionary alloc] init];
+    }
+    return _operations;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)didReceiveMemoryWarning
+{
+    [self.queue cancelAllOperations];
+    [self.operations removeAllObjects];
+    [self.images removeAllObjects];
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return self.apps.count;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *ID = @"app";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
+    }
     
-    // Configure the cell...
+    Apps *app = self.apps[indexPath.row];
+    cell.textLabel.text =app.name;
+    cell.detailTextLabel.text = app.download;
+    
+    UIImage *image = self.images[app.icon];
+    if (image) {
+        cell.imageView.image = image;
+    } else {
+        cell.imageView.image = [UIImage imageNamed:@"placeholder"];
+        
+        [self download:app.icon indexPath:indexPath];
+    }
     
     return cell;
+    
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(void)download:(NSString *)imageUrl indexPath:(NSIndexPath *)indexPath
+{
+    NSBlockOperation *operation = self.operations[imageUrl];
+    if (operation) return;
+    
+    operation = [NSBlockOperation blockOperationWithBlock:^{
+        NSURL *url = [NSURL URLWithString:imageUrl];
+        NSData *data = [NSData dataWithContentsOfURL:url];
+        UIImage *image = [UIImage imageWithData:data];
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            if (image) {
+                self.images[imageUrl] = image;
+            }
+            
+            [self.operations removeObjectForKey:imageUrl];
+            
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        }];
+    }];
+    
+    [self.queue addOperation:operation];
+    
+    self.operations[imageUrl] = operation;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.queue setSuspended:YES];
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self.queue setSuspended:NO];
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
