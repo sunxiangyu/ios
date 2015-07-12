@@ -17,6 +17,7 @@
 		46C410431B444EC600D9CA4E /* Apps.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C410421B444EC600D9CA4E /* Apps.m */; };
 		46C410451B444EF800D9CA4E /* apps.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46C410441B444EF800D9CA4E /* apps.plist */; };
 		46C410481B44512600D9CA4E /* AppsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C410471B44512600D9CA4E /* AppsViewController.m */; };
+		46C5A1C21B4F90C5000B6DEE /* DownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C5A1C11B4F90C5000B6DEE /* DownloadOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,8 @@
 		46C410441B444EF800D9CA4E /* apps.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = apps.plist; sourceTree = "<group>"; };
 		46C410461B44512600D9CA4E /* AppsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppsViewController.h; sourceTree = "<group>"; };
 		46C410471B44512600D9CA4E /* AppsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppsViewController.m; sourceTree = "<group>"; };
+		46C5A1C01B4F90C5000B6DEE /* DownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadOperation.h; sourceTree = "<group>"; };
+		46C5A1C11B4F90C5000B6DEE /* DownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +95,8 @@
 				46C4101D1B444EB400D9CA4E /* AppDelegate.m */,
 				46C410411B444EC600D9CA4E /* Apps.h */,
 				46C410421B444EC600D9CA4E /* Apps.m */,
+				46C5A1C01B4F90C5000B6DEE /* DownloadOperation.h */,
+				46C5A1C11B4F90C5000B6DEE /* DownloadOperation.m */,
 				46C410461B44512600D9CA4E /* AppsViewController.h */,
 				46C410471B44512600D9CA4E /* AppsViewController.m */,
 				46C410251B444EB400D9CA4E /* Main.storyboard */,
@@ -232,6 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46C410431B444EC600D9CA4E /* Apps.m in Sources */,
+				46C5A1C21B4F90C5000B6DEE /* DownloadOperation.m in Sources */,
 				46C410211B444EB400D9CA4E /* Cell_Image_Demo.xcdatamodeld in Sources */,
 				46C410481B44512600D9CA4E /* AppsViewController.m in Sources */,
 				46C4101E1B444EB400D9CA4E /* AppDelegate.m in Sources */,
@@ -430,6 +436,7 @@
 				46C4103D1B444EB400D9CA4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		46C4103E1B444EB400D9CA4E /* Build configuration list for PBXNativeTarget "Cell Image DemoTests" */ = {
 			isa = XCConfigurationList;
@@ -438,6 +445,7 @@
 				46C410401B444EB400D9CA4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

@@ -8,8 +8,11 @@
 
 #import "AppsViewController.h"
 #import "Apps.h"
+#import "DownloadOperation.h"
 
-@interface AppsViewController ()
+#define kAppImageFile(url) [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[url lastPathComponent]]
+
+@interface AppsViewController ()<DownloadOperationDelegate>
 
 @property(nonatomic,strong) NSMutableArray *apps;
 
@@ -93,9 +96,16 @@
     if (image) {
         cell.imageView.image = image;
     } else {
-        cell.imageView.image = [UIImage imageNamed:@"placeholder"];
         
-        [self download:app.icon indexPath:indexPath];
+        NSString *file = kAppImageFile(app.icon);
+        NSData *data = [NSData dataWithContentsOfFile:file];
+        if (data) {
+            cell.imageView.image = [UIImage imageWithData:data];
+        } else {
+            cell.imageView.image = [UIImage imageNamed:@"placeholder"];
+            
+            [self download:app.icon indexPath:indexPath];
+        }
     }
     
     return cell;
@@ -104,28 +114,35 @@
 
 -(void)download:(NSString *)imageUrl indexPath:(NSIndexPath *)indexPath
 {
-    NSBlockOperation *operation = self.operations[imageUrl];
+    DownloadOperation *operation = self.operations[imageUrl];
     if (operation) return;
     
-    operation = [NSBlockOperation blockOperationWithBlock:^{
-        NSURL *url = [NSURL URLWithString:imageUrl];
-        NSData *data = [NSData dataWithContentsOfURL:url];
-        UIImage *image = [UIImage imageWithData:data];
-        
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            if (image) {
-                self.images[imageUrl] = image;
-            }
-            
-            [self.operations removeObjectForKey:imageUrl];
-            
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }];
-    }];
+    operation = [[DownloadOperation alloc] init];
+    operation.imageUrl = imageUrl;
+    operation.indexPath = indexPath;
+    
+    operation.delegate = self;
     
     [self.queue addOperation:operation];
     
     self.operations[imageUrl] = operation;
+}
+
+#pragma mark - DownloadOperationDelegate
+
+-(void)downloadOperation:(DownloadOperation *)operation didFinishDownload:(UIImage *)image
+{
+    if (image) {
+        self.images[operation.imageUrl] = image;
+        
+        NSData *data = UIImagePNGRepresentation(image);
+        
+        [data writeToFile:kAppImageFile(operation.imageUrl) atomically:YES];
+    }
+    
+    [self.operations removeObjectForKey:operation.imageUrl];
+    
+    [self.tableView reloadRowsAtIndexPaths:@[operation.indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
